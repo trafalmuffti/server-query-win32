@@ -11,7 +11,7 @@
 //!   rustup target add x86_64-pc-windows-gnu
 //!   cargo build --target x86_64-pc-windows-gnu --release
 
-// Suppress the console window on Windows.
+// Suppress the console window on Windows (works with MSVC and MinGW).
 #![windows_subsystem = "windows"]
 
 use std::mem::zeroed;
@@ -176,6 +176,7 @@ fn fetch_server_header(url: &str) -> String {
     // ureq is compiled with the `tls` feature which uses rustls under
     // the hood — no OpenSSL required.
     let agent = ureq::AgentBuilder::new()
+        .timeout_connect(std::time::Duration::from_secs(2))
         .timeout(std::time::Duration::from_secs(10))
         .build();
 
