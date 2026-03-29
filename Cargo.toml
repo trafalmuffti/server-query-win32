@@ -1,0 +1,21 @@
+[package]
+name = "server-checker"
+version = "0.1.0"
+edition = "2021"
+description = "HTTPS Server Header Checker - Win32 GUI app using rustls via MinGW"
+
+[dependencies]
+# Win32 API bindings for native GUI (textbox, button, message box)
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Graphics_Gdi",
+    "Win32_System_LibraryLoader",
+    "Win32_UI_Controls",
+] }
+
+# HTTP client backed by rustls (pure-Rust TLS, no OpenSSL needed)
+ureq = { version = "2", default-features = false, features = ["tls"] }
+
+# Explicit rustls dependency so it is visible in the dependency tree
+rustls = "0.23"
